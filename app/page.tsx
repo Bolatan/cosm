@@ -4,8 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, Truck, ShieldCheck, Sparkles, Heart } from 'lucide-react';
-import { supabase } from '@/lib/supabase';
-import type { Product } from '@/lib/supabase';
+import type { Product } from '@/lib/db';
 import { Hero } from '@/components/site/hero';
 import { SiteHeader } from '@/components/site/site-header';
 import { SiteFooter } from '@/components/site/site-footer';
@@ -43,13 +42,17 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchProducts() {
-      const { data } = await supabase
-        .from('products')
-        .select('*')
-        .order('created_at', { ascending: false })
-        .limit(8);
-      setProducts(data || []);
-      setLoading(false);
+      try {
+        const res = await fetch('/api/products?limit=8');
+        if (res.ok) {
+          const data = await res.json();
+          setProducts(data || []);
+        }
+      } catch (e) {
+        console.error('Failed to fetch products', e);
+      } finally {
+        setLoading(false);
+      }
     }
     fetchProducts();
   }, []);

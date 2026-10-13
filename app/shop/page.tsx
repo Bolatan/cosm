@@ -2,8 +2,7 @@
 
 import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { supabase } from '@/lib/supabase';
-import type { Product, Category } from '@/lib/supabase';
+import type { Product, Category } from '@/lib/db';
 import { SiteHeader } from '@/components/site/site-header';
 import { SiteFooter } from '@/components/site/site-footer';
 import { CartDrawer } from '@/components/site/cart-drawer';
@@ -30,15 +29,22 @@ function ShopContent() {
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
-      const [{ data: catData }, { data: prodData }] = await Promise.all([
-        supabase.from('categories').select('*').order('name'),
-        supabase.from('products').select('*').order('created_at', {
-          ascending: false,
-        }),
-      ]);
-      setCategories(catData || []);
-      setProducts(prodData || []);
-      setLoading(false);
+      try {
+        const [catRes, prodRes] = await Promise.all([
+          fetch('/api/categories'),
+          fetch('/api/products'),
+        ]);
+
+        const catData = catRes.ok ? await catRes.json() : [];
+        const prodData = prodRes.ok ? await prodRes.json() : [];
+
+        setCategories(catData || []);
+        setProducts(prodData || []);
+      } catch (e) {
+        console.error('Failed to fetch shop data', e);
+      } finally {
+        setLoading(false);
+      }
     }
     fetchData();
   }, []);

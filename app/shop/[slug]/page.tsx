@@ -13,8 +13,7 @@ import {
   ShieldCheck,
   RotateCcw,
 } from 'lucide-react';
-import { supabase } from '@/lib/supabase';
-import type { Product } from '@/lib/supabase';
+import type { Product } from '@/lib/db';
 import { SiteHeader } from '@/components/site/site-header';
 import { SiteFooter } from '@/components/site/site-footer';
 import { CartDrawer } from '@/components/site/cart-drawer';
@@ -48,25 +47,21 @@ export default function ProductDetailPage({
   useEffect(() => {
     async function fetchProduct() {
       setLoading(true);
-      const { data } = await supabase
-        .from('products')
-        .select('*')
-        .eq('slug', slug)
-        .maybeSingle();
-
-      if (data) {
-        setProduct(data);
-        const { data: relatedData } = await supabase
-          .from('products')
-          .select('*')
-          .eq('category_id', data.category_id)
-          .neq('id', data.id)
-          .limit(4);
-        setRelated(relatedData || []);
-      } else {
+      try {
+        const res = await fetch(`/api/products/${slug}`);
+        if (res.ok) {
+          const data = await res.json();
+          setProduct(data.product || null);
+          setRelated(data.related || []);
+        } else {
+          setProduct(null);
+        }
+      } catch (e) {
+        console.error('Failed to fetch product detail', e);
         setProduct(null);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     }
     fetchProduct();
   }, [slug]);

@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { ShoppingBag } from 'lucide-react';
-import type { Product } from '@/lib/supabase';
+import type { Product } from '@/lib/db';
 import { formatNaira } from '@/lib/format';
 import { useCart } from '@/context/cart-context';
 import { toast } from 'sonner';
