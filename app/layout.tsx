@@ -12,11 +12,11 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: 'DANG Lifestyle — Premium Skincare, Fragrance & Body Care',
+  title: 'Prism & Petal — Premium Skincare, Fragrance & Body Care',
   description:
     'A trailblazing beauty and lifestyle brand committed to empowering people of colour with curated skincare, fragrance, and personal care products.',
   openGraph: {
-    title: 'DANG Lifestyle — Premium Skincare, Fragrance & Body Care',
+    title: 'Prism & Petal — Premium Skincare, Fragrance & Body Care',
     description:
       'Beauty, skincare, fragrance, and personal care products for people of colour.',
     images: [

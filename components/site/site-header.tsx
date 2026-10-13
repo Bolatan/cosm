@@ -74,7 +74,7 @@ export function SiteHeader() {
             </SheetTrigger>
             <SheetContent side="left" className="w-80">
               <SheetHeader>
-                <SheetTitle className="font-serif text-2xl">DANG</SheetTitle>
+                <SheetTitle className="font-serif text-2xl">Prism &amp; Petal</SheetTitle>
               </SheetHeader>
               <nav className="mt-8 flex flex-col gap-1">
                 {navLinks.map((link) => (
@@ -97,10 +97,7 @@ export function SiteHeader() {
             className="flex items-center gap-2 lg:flex-1"
           >
             <span className="font-serif text-2xl font-bold tracking-tight text-primary">
-              DANG
-            </span>
-            <span className="hidden text-xs font-medium uppercase tracking-widest text-muted-foreground sm:inline">
-              Lifestyle
+              Prism &amp; Petal
             </span>
           </Link>
 

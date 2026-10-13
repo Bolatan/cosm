@@ -230,7 +230,7 @@ export default function Home() {
             <div className="relative aspect-[5/4] overflow-hidden rounded-2xl">
               <Image
                 src="https://images.pexels.com/photos/17273209/pexels-photo-17273209.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
-                alt="DANG Lifestyle founder"
+                alt="Prism & Petal founder"
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover"
@@ -244,7 +244,7 @@ export default function Home() {
                 Not just a brand — it&apos;s a movement
               </h2>
               <p className="text-base leading-relaxed text-muted-foreground">
-                DANG Lifestyle is a trailblazing e-commerce and retail platform
+                Prism &amp; Petal is a trailblazing e-commerce and retail platform
                 committed to empowering women and men of colour by providing a
                 curated selection of beauty, skincare, fragrance, and personal
                 care products.
@@ -286,7 +286,7 @@ export default function Home() {
                 },
                 {
                   quote:
-                    'I have been searching for skincare that works for my melanin-rich skin. DANG is the answer.',
+                    'I have been searching for skincare that works for my melanin-rich skin. Prism & Petal is the answer.',
                   name: 'Chidinma N.',
                   location: 'Abuja',
                 },

@@ -30,7 +30,7 @@ export function SiteFooter() {
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center gap-6 text-center">
             <h3 className="font-serif text-3xl font-medium sm:text-4xl">
-              Join the DANG Community
+              Join the Prism &amp; Petal Community
             </h3>
             <p className="max-w-md text-sm text-primary-foreground/70">
               Get exclusive offers, early access to new products, and skincare
@@ -58,7 +58,7 @@ export function SiteFooter() {
         <div className="grid grid-cols-2 gap-8 md:grid-cols-4 lg:gap-12">
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="font-serif text-2xl font-bold">
-              DANG
+              Prism &amp; Petal
             </Link>
             <p className="mt-4 text-sm text-primary-foreground/70">
               A premium beauty and lifestyle brand empowering people of colour
@@ -119,7 +119,7 @@ export function SiteFooter() {
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-primary-foreground/15 pt-8 sm:flex-row">
           <p className="text-xs text-primary-foreground/50">
-            &copy; {new Date().getFullYear()} DANG Lifestyle. All rights
+            &copy; {new Date().getFullYear()} Prism &amp; Petal. All rights
             reserved.
           </p>
           <p className="text-xs text-primary-foreground/50">
