@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
-import type { Product, CartItem } from '@/lib/supabase';
+import type { Product, CartItem } from '@/lib/db';
 
 type CartContextType = {
   items: CartItem[];
