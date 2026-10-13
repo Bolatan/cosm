@@ -18,13 +18,13 @@ export default function AboutPage() {
           <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
             <div className="mx-auto max-w-3xl text-center">
               <span className="text-xs font-medium uppercase tracking-wider text-primary">
-                About DANG
+                About Prism &amp; Petal
               </span>
               <h1 className="mt-3 font-serif text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl text-balance">
                 A movement dedicated to celebrating natural beauty
               </h1>
               <p className="mt-6 text-base leading-relaxed text-muted-foreground sm:text-lg">
-                DANG Lifestyle is a trailblazing e-commerce and retail platform
+                Prism &amp; Petal is a trailblazing e-commerce and retail platform
                 committed to empowering women and men of colour by providing a
                 curated selection of beauty, skincare, fragrance, and personal
                 care products.
@@ -53,16 +53,16 @@ export default function AboutPage() {
                 Ifedayo Agoro
               </h2>
               <p className="text-lg font-medium text-muted-foreground">
-                Founder &amp; CEO of DANG Lifestyle
+                Founder &amp; CEO of Prism &amp; Petal
               </p>
               <p className="text-base leading-relaxed text-muted-foreground">
-                Ifedayo Agoro launched DANG Lifestyle in Nigeria in 2020 as a
+                Ifedayo Agoro launched Prism &amp; Petal in Nigeria in 2020 as a
                 premium home and body care production company. It has since
                 expanded into a diverse portfolio of over 20 products with
                 stores in the UK, USA, Canada, Ghana, and Kenya.
               </p>
               <p className="text-base leading-relaxed text-muted-foreground">
-                She successfully converted DANG community members into loyal
+                She successfully converted Prism &amp; Petal community members into loyal
                 customers, with over 100,000 customers worldwide in three years
                 without a major campaign. With over 16 years of experience
                 across oil &amp; gas and creative media, she brings a unique
