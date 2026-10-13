@@ -30,6 +30,15 @@ export type CartItem = {
   quantity: number;
 };
 
+export type OrderItem = {
+  id: string;
+  order_id: string;
+  product_id: string | null;
+  product_name: string;
+  price: number;
+  quantity: number;
+};
+
 export type Order = {
   id: string;
   reference: string;
@@ -40,19 +49,15 @@ export type Order = {
   city: string;
   state: string;
   total: number;
-  status: string;
+  status: string; // e.g. 'pending', 'processing', 'completed', 'cancelled'
+  payment_method: 'paystack' | 'pod';
+  payment_status: 'pending' | 'paid' | 'failed';
   paystack_reference: string | null;
+  items: OrderItem[];
   created_at: string;
 };
 
-export type OrderItem = {
-  id: string;
-  order_id: string;
-  product_id: string | null;
-  product_name: string;
-  price: number;
-  quantity: number;
-};
+const inMemoryOrders: Order[] = [];
 
 // Initial default data for fallback or seed
 export const initialCategories: Category[] = [
@@ -374,5 +379,108 @@ export async function getRelatedProducts(
     return initialProducts
       .filter((p) => p.category_id === categoryId && p.id !== excludeProductId)
       .slice(0, limit);
+  }
+}
+
+export async function createOrder(
+  orderData: Omit<Order, 'id' | 'created_at'>
+): Promise<Order> {
+  const id = 'ord_' + Math.random().toString(36).substring(2, 11);
+  const newOrder: Order = {
+    ...orderData,
+    id,
+    created_at: new Date().toISOString(),
+  };
+
+  const db = await getDb();
+  if (!db) {
+    inMemoryOrders.push(newOrder);
+    return newOrder;
+  }
+
+  try {
+    await db.collection('orders').insertOne({ ...newOrder });
+    return newOrder;
+  } catch (err) {
+    console.error('Error saving order to MongoDB:', err);
+    inMemoryOrders.push(newOrder);
+    return newOrder;
+  }
+}
+
+export async function getOrderByIdOrRef(
+  idOrRef: string
+): Promise<Order | null> {
+  const db = await getDb();
+  if (!db) {
+    return (
+      inMemoryOrders.find(
+        (o) => o.id === idOrRef || o.reference === idOrRef
+      ) || null
+    );
+  }
+
+  try {
+    const order = await db
+      .collection<Order>('orders')
+      .findOne(
+        { $or: [{ id: idOrRef }, { reference: idOrRef }] },
+        { projection: { _id: 0 } }
+      );
+    if (!order) {
+      return (
+        inMemoryOrders.find(
+          (o) => o.id === idOrRef || o.reference === idOrRef
+        ) || null
+      );
+    }
+    return order;
+  } catch (err) {
+    console.error('Error fetching order from MongoDB:', err);
+    return (
+      inMemoryOrders.find(
+        (o) => o.id === idOrRef || o.reference === idOrRef
+      ) || null
+    );
+  }
+}
+
+export async function updateOrderPaymentStatus(
+  reference: string,
+  paymentStatus: 'paid' | 'failed' | 'pending',
+  paystackReference?: string
+): Promise<Order | null> {
+  const db = await getDb();
+
+  const updateFields: Partial<Order> = {
+    payment_status: paymentStatus,
+  };
+  if (paymentStatus === 'paid') {
+    updateFields.status = 'processing';
+  }
+  if (paystackReference) {
+    updateFields.paystack_reference = paystackReference;
+  }
+
+  const inMemIndex = inMemoryOrders.findIndex((o) => o.reference === reference);
+  if (inMemIndex !== -1) {
+    inMemoryOrders[inMemIndex] = {
+      ...inMemoryOrders[inMemIndex],
+      ...updateFields,
+    };
+  }
+
+  if (!db) {
+    return inMemIndex !== -1 ? inMemoryOrders[inMemIndex] : null;
+  }
+
+  try {
+    await db
+      .collection('orders')
+      .updateOne({ reference }, { $set: updateFields });
+    return getOrderByIdOrRef(reference);
+  } catch (err) {
+    console.error('Error updating order status in MongoDB:', err);
+    return inMemIndex !== -1 ? inMemoryOrders[inMemIndex] : null;
   }
 }
